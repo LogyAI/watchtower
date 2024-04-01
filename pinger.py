@@ -3,11 +3,12 @@ import psutil
 import threading
 import time
 import sys
+import os
 
 class ServerPinger:
-    def __init__(self):
+    def __init__(self, server_id):
         self.server_url = "https://status.logy.ai"
-        self.server_id = " ".join(sys.argv)
+        self.server_id = server_id
 
     def get_system_usage(self):
         """Retrieve the current system's CPU and RAM usage."""
@@ -29,7 +30,7 @@ class ServerPinger:
                 }
             )
             print(f"Ping response: {response.status_code}, {response.json()}")
-        except requests.exceptions.RequestException as e:
+        except Exception as e:
             print(f"Error pinging {self.server_url}: {e}")
 
     def start_pinging(self, interval=10):
@@ -43,5 +44,4 @@ class ServerPinger:
         thread.daemon = True  # Daemonize thread
         thread.start()
 
-pinger = ServerPinger()
-pinger.start_pinging(60)
+os.system("cd watchtower; git pull")
